@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 const dimension = prompt('Introduzca la dimnesion del tablero: ')
 
 //Crear tablero
@@ -63,3 +64,6 @@ function moverSubmarino() {
 
 //Mostrar tablero
 //console.log(tablero);
+=======
+linea de prueba
+>>>>>>> 901f6077dca8f78eaac4ca910caabe5418c3eeef
