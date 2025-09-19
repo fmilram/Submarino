@@ -8,7 +8,10 @@ var tablero = [];
     var fila = Math.floor(Math.random() * dimension);
     var columna = Math.floor(Math.random() * dimension);
 
+    crearTablero(dimension, fila, columna);
+
 //Iniciar tabblero
+function crearTablero(dimension, fila, columna){
     for (var i = 0; i < dimension; i++){
         tablero[i] = [];
         for (var j = 0; j< dimension; j++){
@@ -24,9 +27,10 @@ var tablero = [];
             }
         }
     }
+}
 
 var filaElegida = prompt('Introduce la fila: ');
-let columnaElegida = prompt('Introduce la columna: ');
+var columnaElegida = prompt('Introduce la columna: ');
 
 //Comprobar coordenadas introducidas
 if (filaElegida >= 0 && filaElegida < dimension && columnaElegida >= 0 && columnaElegida < dimension) {
@@ -60,6 +64,8 @@ function moverSubmarino() {
     else if (direccion === 2 && columnaSub > 0) nuevaColumna--;
     //Derecha
     else if (direccion === 3 && columnaSub < dimension - 1) nuevaColumna++;
+
+    tablero[nuevaFila][nuevaColumna] = 1;
 }
 
 //Mostrar tablero
