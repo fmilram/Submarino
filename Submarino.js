@@ -1,73 +1,86 @@
 <<<<<<< HEAD
-const dimension = prompt('Introduzca la dimnesion del tablero: ')
+const dimension = parseInt(prompt('Introduzca la dimensión del tablero: '));
+const dificultad = parseInt(prompt('Introduzca la dificultad: '));
 
-//Crear tablero
+// Crear tablero
 var tablero = [];
 
-//Crear posición inicial del submarino
-    var fila = Math.floor(Math.random() * dimension);
-    var columna = Math.floor(Math.random() * dimension);
+// Posición inicial del submarino
+var fila = Math.floor(Math.random() * dimension);
+var columna = Math.floor(Math.random() * dimension);
 
-    crearTablero(dimension, fila, columna);
-
-//Iniciar tabblero
-function crearTablero(dimension, fila, columna){
-    for (var i = 0; i < dimension; i++){
-        tablero[i] = [];
-        for (var j = 0; j< dimension; j++){
-            if (i === fila && j === columna) {
-             //Colocar submarino
-                tablero[i][j] = 1;
-            } else if (i === fila || j === columna) {
-            //Localizar submarino
-                tablero[i][j] = 2;
-            } else {
-                //Casilla vacía
-                tablero[i][j] = 0;
-            }
-        }
+// Inicializar tablero
+for (var i = 0; i < dimension; i++) {
+    tablero[i] = [];
+    for (var j = 0; j < dimension; j++) {
+        tablero[i][j] = 0;
     }
 }
 
-var filaElegida = prompt('Introduce la fila: ');
-var columnaElegida = prompt('Introduce la columna: ');
+// Función para colocar el submarino en cada turno
+function actualizarTablero() {
+    // Reiniciar tablero
+    for (var i = 0; i < dimension; i++) {
+        for (var j = 0; j < dimension; j++) {
+            tablero[i][j] = 0;
+        }
+    }
 
-//Comprobar coordenadas introducidas
-if (filaElegida >= 0 && filaElegida < dimension && columnaElegida >= 0 && columnaElegida < dimension) {
-  console.log(tablero[filaElegida][columnaElegida]);
-} else {
-  console.log('Coordenadas fuera del tablero.');
+    // Colocar submarino
+    tablero[fila][columna] = 1;
+
+    // Indicar casillas según la dificultad
+    for (let d = 1; d <= dificultad; d++) {
+        if (fila - d >= 0) tablero[fila - d][columna] = 2;
+        if (fila + d < dimension) tablero[fila + d][columna] = 2;
+        if (columna - d >= 0) tablero[fila][columna - d] = 2;
+        if (columna + d < dimension) tablero[fila][columna + d] = 2;
+    }
 }
 
-//Comrpobar intento
-if (filaElegida === fila && columnaElegida === columna) {
-    console.log('Has encontrado el submarino.');
-} else {
-    console.log('Inténtalo de nuevo.');
-    moverSubmarino();
-}
-
-//Mover el submarino hacia una dirección dentro del tablero
+// Función para mover el submarino
 function moverSubmarino() {
-    
-    //Generar una dirección aleatoria entre las cuatro opciones posibles
     let direccion = Math.floor(Math.random() * 4);
-
     let nuevaFila = fila;
     let nuevaColumna = columna;
 
-    //Arriba
-    if (direccion === 0 && filaSub > 0) nuevaFila--;
-    //Abajo
-    else if (direccion === 1 && filaSub < dimension - 1) nuevaFila++;
-    //Izquierda
-    else if (direccion === 2 && columnaSub > 0) nuevaColumna--;
-    //Derecha
-    else if (direccion === 3 && columnaSub < dimension - 1) nuevaColumna++;
+    if (direccion === 0 && fila > 0) nuevaFila--;
+    else if (direccion === 1 && fila < dimension - 1) nuevaFila++;
+    else if (direccion === 2 && columna > 0) nuevaColumna--;
+    else if (direccion === 3 && columna < dimension - 1) nuevaColumna++;
 
-    tablero[nuevaFila][nuevaColumna] = 1;
+    fila = nuevaFila;
+    columna = nuevaColumna;
 }
 
+// Preparar tablero inicial
+actualizarTablero();
+
+// Juego principal
+let encontrado = false;
+do {
+    let filaElegida = parseInt(prompt('Introduce la fila: '));
+    let columnaElegida = parseInt(prompt('Introduce la columna: '));
+
+    if (filaElegida >= 0 && filaElegida < dimension && columnaElegida >= 0 && columnaElegida < dimension) {
+        let valor = tablero[filaElegida][columnaElegida];
+        console.log("Resultado en esa casilla:", valor);
+
+        if (valor === 1) {
+            console.log("Submarino encontrado.");
+            encontrado = true;
+        } else {
+            console.log("Prueba otra vez.");
+            moverSubmarino();
+            actualizarTablero();
+        }
+    } else {
+        console.log("Coordenadas fuera del tablero.");
+    }
+
+} while (!encontrado);
+
+console.log("Juego terminado.");
 //Mostrar tablero
 //console.log(tablero);
 =======
